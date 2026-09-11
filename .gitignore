@@ -1,0 +1,6 @@
+# Hide environment secret keys
+.env
+
+# Hide local python cache folders
+__pycache__/
+*.pyc

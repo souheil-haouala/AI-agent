@@ -1,0 +1,8 @@
+[
+  {
+    "ticket_id": "DEV-101",
+    "title": "Initialize Testing Pipeline",
+    "description": "As a developer, I want a CI pipeline that runs unit tests using npm on every pull request to main.",
+    "status": "DONE"
+  }
+]
