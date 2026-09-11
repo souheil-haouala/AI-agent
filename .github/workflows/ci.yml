@@ -1,8 +1,10 @@
 name: CI - Unit Tests
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
-    branches: [ main, master, develop ] # Common development branches
+    branches: [ main ]
 
 jobs:
   unit-tests:
