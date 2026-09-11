@@ -1,20 +1,32 @@
-name: CI Pipeline
+name: CI - Unit Tests
 
 on:
   pull_request:
-    branches:
-      - main
-      - master
+    branches: [ main, master, develop ] # Common development branches
 
 jobs:
-  test:
+  unit-tests:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Build Docker image
-        run: docker build -t my-app .
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20 # Matches the Node.js version specified in the Dockerfile
 
-      - name: Run unit tests
-        run: docker run my-app npm test
+    - name: Cache Node.js modules
+      uses: actions/cache@v4
+      with:
+        path: ~/.npm # Cache npm's global cache directory
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Install dependencies
+      run: npm ci # Use npm ci for clean and reproducible installs in CI environments
+
+    - name: Run unit tests
+      run: npm test # Execute the unit tests defined in package.json
